@@ -1,4 +1,5 @@
 ﻿using MiniMRP.Core.Calculation;
+using MiniMRP.Core.Entities;
 namespace MiniMRP.Tests
 {
     public class MaterialRequirementTests
@@ -12,7 +13,7 @@ namespace MiniMRP.Tests
 
             Assert.Equal(5, result);
         }
-        
+
         [Fact]
         public void Shortage_StockEnough_ReturnsZero()
         {
@@ -22,5 +23,7 @@ namespace MiniMRP.Tests
 
             Assert.Equal(0, result);
         }
+
+
     }
 }

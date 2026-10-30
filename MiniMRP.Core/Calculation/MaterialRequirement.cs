@@ -1,13 +1,8 @@
-﻿using MiniMRP.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiniMRP.Core.Calculation
+﻿namespace MiniMRP.Core.Calculation
 {
     public class MaterialRequirement
     {
-        public long RequiredQuantity {  get; set; }
+        public long RequiredQuantity { get; set; }
         public long StockQuantity { get; set; }
         public long MaterialId { get; set; }
         public string MaterialCode { get; set; } = "";
