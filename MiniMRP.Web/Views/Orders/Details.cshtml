@@ -1,0 +1,48 @@
+﻿@model MiniMRP.Web.Models.OrderDetailsViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sipariş No</th>
+            <th>Poz No</th>
+            <th>Ürün</th>
+            <th>Miktar</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.Order.No</td>
+                <td>@Model.Order.PositionNo</td>
+                <td>@Model.Order.Product.Name</td>
+                <td>@Model.Order.Quantity</td>
+            </tr>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Malzeme Kodu</th>
+            <th>Malzeme Adı</th>
+            <th>Malzeme Gereksinimi</th>
+            <th>Malzeme Stok Miktarı</th>
+            <th>Eksik Miktar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model.Requirements)
+        {
+            <tr class="@(req.Shortage > 0 ? "table-danger" : "")">
+                <td>@req.MaterialCode</td>
+                <td>@req.MaterialName</td>
+                <td>@req.RequiredQuantity</td>
+                <td>@req.StockQuantity</td>
+                <td>@req.Shortage</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+
+
+
