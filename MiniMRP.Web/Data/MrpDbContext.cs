@@ -18,7 +18,7 @@ public class MrpDbContext : DbContext
         modelBuilder.Entity<Material>().HasIndex(m => m.Code).IsUnique();
         modelBuilder.Entity<Product>().HasIndex(p => p.Code).IsUnique();
         modelBuilder.Entity<RecipeItem>().HasIndex(r => new { r.ProductId, r.MaterialId }).IsUnique();
-        modelBuilder.Entity<Order>().HasIndex(o => new { o.No, o.PositionNo }).IsUnique();
+        modelBuilder.Entity<Order>().HasIndex(o => new { o.No, o.PositionNo, o.ProductId }).IsUnique();
 
         modelBuilder.Entity<Order>()
           .HasOne(o => o.Product)
@@ -45,7 +45,8 @@ public class MrpDbContext : DbContext
         );
 
         modelBuilder.Entity<Product>().HasData(
-            new Product { Id = 1, Code = "MASA", Name = "Masa" }
+            new Product { Id = 1, Code = "MASA", Name = "Masa" },
+            new Product { Id = 2, Code = "KOLT", Name = "Koltuk" }
         );
 
         modelBuilder.Entity<RecipeItem>().HasData(

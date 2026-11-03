@@ -95,7 +95,7 @@ namespace MiniMRP.Web.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("No", "PositionNo")
+                    b.HasIndex("No", "PositionNo", "ProductId")
                         .IsUnique();
 
                     b.ToTable("Orders");
@@ -138,6 +138,12 @@ namespace MiniMRP.Web.Migrations
                             Id = 1L,
                             Code = "MASA",
                             Name = "Masa"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Code = "KOLT",
+                            Name = "Koltuk"
                         });
                 });
 
