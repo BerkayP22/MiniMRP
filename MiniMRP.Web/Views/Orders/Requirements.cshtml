@@ -1,0 +1,29 @@
+﻿@model List<MiniMRP.Core.Calculation.MaterialRequirement>
+<h1>Toplam Malzeme İhtiyacı</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Kod</th>
+            <th>Malzeme</th>
+            <th>Toplam İhtiyaç</th>
+            <th>Stok</th>
+            <th>Eksik</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model)
+        {
+            <tr class="@(req.Shortage > 0 ? "table-danger" : "")">
+                <td>@req.MaterialCode</td>
+                <td>@req.MaterialName</td>
+                <td>@req.RequiredQuantity</td>
+                <td>@req.StockQuantity</td>
+                <td>@req.Shortage</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MiniMRP.Core.Calculation;
 using MiniMRP.Core.Entities;
 using MiniMRP.Web.Data;
 using MiniMRP.Web.Models;
@@ -76,6 +77,17 @@ namespace MiniMRP.Web.Controllers
             _db.Orders.Add(order);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Requirements()
+        {
+            var orders = await _db.Orders.Include(o => o.Product)
+                .ThenInclude(p => p.RecipeItems)
+                .ThenInclude(ri => ri.Material)
+                .ToListAsync();
+
+            var requirements = MrpCalculator.CalculateTotal(orders);
+            return View(requirements);
         }
     }
 }
