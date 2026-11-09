@@ -61,5 +61,7 @@ namespace MiniMRP.Core.Calculation
 
             return totals.Values.ToList();
         }
+
+        
     }
 }

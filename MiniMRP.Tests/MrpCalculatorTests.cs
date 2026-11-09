@@ -9,20 +9,7 @@ namespace MiniMRP.Tests
         [Fact]
         public void Calculate_StockNotEnough_ReturnsShortagePerMaterial()
         {
-            var tabla = new Material { Id = 1, Code = "TBL", FullName = "Tabla", StockQuantity = 10 };
-            var ayaklik = new Material { Id = 2, Code = "AYK", FullName = "Ayaklık", StockQuantity = 50 };
-            var vida = new Material { Id = 3, Code = "VDA", FullName = "Vida", StockQuantity = 100 };
-
-            var masa = new Product
-            {
-                Id = 1,
-                Code = "MASA",
-                Name = "Masa",
-            };
-
-            masa.RecipeItems.Add(new RecipeItem { Material = tabla, Quantity = 1 });
-            masa.RecipeItems.Add(new RecipeItem { Material = ayaklik, Quantity = 4 });
-            masa.RecipeItems.Add(new RecipeItem { Material = vida, Quantity = 10 });
+            var masa = CreateMasa(tablaStock: 10, ayaklikStock: 50, vidaStock: 100);
 
             var order = new Order { Product = masa, Quantity = 15 };
 
@@ -41,19 +28,7 @@ namespace MiniMRP.Tests
         [Fact]
         public void Calculate_StockEnough_ReturnsZeroShortage()
         {
-            var tabla = new Material { Id = 1, Code = "TBL", FullName = "Tabla", StockQuantity = 100 };
-            var ayaklik = new Material { Id = 2, Code = "AYK", FullName = "Ayaklık", StockQuantity = 100 };
-            var vida = new Material { Id = 3, Code = "VDA", FullName = "Vida", StockQuantity = 1000 };
-            var masa = new Product
-            {
-                Id = 1,
-                Code = "MASA",
-                Name = "Masa",
-            };
-
-            masa.RecipeItems.Add(new RecipeItem { Material = tabla, Quantity = 1 });
-            masa.RecipeItems.Add(new RecipeItem { Material = ayaklik, Quantity = 4 });
-            masa.RecipeItems.Add(new RecipeItem { Material = vida, Quantity = 10 });
+            var masa = CreateMasa(tablaStock: 100, ayaklikStock: 100, vidaStock: 1000);
 
             var order = new Order { Product = masa, Quantity = 15 };
             var results = MrpCalculator.Calculate(order);
@@ -72,20 +47,7 @@ namespace MiniMRP.Tests
         [Fact]
         public void CalculateTotal_MaterialRequirementsFromMultipleOrders_ReturnsTotalShortagePerMaterial()
         {
-            var tabla = new Material { Id = 1, Code = "TBL", FullName = "Tabla", StockQuantity = 10 };
-            var ayaklik = new Material { Id = 2, Code = "AYK", FullName = "Ayaklık", StockQuantity = 50 };
-            var vida = new Material { Id = 3, Code = "VDA", FullName = "Vida", StockQuantity = 100 };
-
-            var masa = new Product
-            {
-                Id = 1,
-                Code = "MASA",
-                Name = "Masa",
-            };
-
-            masa.RecipeItems.Add(new RecipeItem { Material = tabla, Quantity = 1 });
-            masa.RecipeItems.Add(new RecipeItem { Material = ayaklik, Quantity = 4 });
-            masa.RecipeItems.Add(new RecipeItem { Material = vida, Quantity = 10 });
+            var masa = CreateMasa(tablaStock: 10, ayaklikStock: 50, vidaStock: 100);
 
             var order1 = new Order { Product = masa, Quantity = 15 };
             var order2 = new Order { Product = masa, Quantity = 5 };
@@ -109,23 +71,11 @@ namespace MiniMRP.Tests
             Assert.Equal(200, vid.RequiredQuantity);
             Assert.Equal(100, vid.Shortage);
         }
+
         [Fact]
         public void CalculateTotal_EachOrderFitsButTotalDoesNot_ReturnsShortage()
         {
-            var tabla = new Material { Id = 1, Code = "TBL", FullName = "Tabla", StockQuantity = 10 };
-            var ayaklik = new Material { Id = 2, Code = "AYK", FullName = "Ayaklık", StockQuantity = 50 };
-            var vida = new Material { Id = 3, Code = "VDA", FullName = "Vida", StockQuantity = 100 };
-
-            var masa = new Product
-            {
-                Id = 1,
-                Code = "MASA",
-                Name = "Masa",
-            };
-
-            masa.RecipeItems.Add(new RecipeItem { Material = tabla, Quantity = 1 });
-            masa.RecipeItems.Add(new RecipeItem { Material = ayaklik, Quantity = 4 });
-            masa.RecipeItems.Add(new RecipeItem { Material = vida, Quantity = 10 });
+            var masa = CreateMasa(tablaStock: 10, ayaklikStock: 50, vidaStock: 100);
 
             var order1 = new Order { Product = masa, Quantity = 8 };
             var order2 = new Order { Product = masa, Quantity = 5 };
@@ -150,6 +100,24 @@ namespace MiniMRP.Tests
             Assert.Equal(30, vid.Shortage);
         }
 
+        private static Product CreateMasa(long tablaStock, long ayaklikStock, long vidaStock)
+        {
+            var tabla = new Material { Id = 1, Code = "TBL", FullName = "Tabla", StockQuantity = tablaStock };
+            var ayaklik = new Material { Id = 2, Code = "AYK", FullName = "Ayaklık", StockQuantity = ayaklikStock };
+            var vida = new Material { Id = 3, Code = "VDA", FullName = "Vida", StockQuantity = vidaStock };
 
+            var masa = new Product
+            {
+                Id = 1,
+                Code = "MASA",
+                Name = "Masa"
+            };
+
+            masa.RecipeItems.Add(new RecipeItem { Material = tabla, Quantity = 1 });
+            masa.RecipeItems.Add(new RecipeItem { Material = ayaklik, Quantity = 4 });
+            masa.RecipeItems.Add(new RecipeItem { Material = vida, Quantity = 10 });
+
+            return masa;
+        }
     }
 }
