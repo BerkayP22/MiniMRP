@@ -17,9 +17,9 @@ MiniMRP bu soruyu iki seviyede cevaplar:
 
 | Siparişler | Sipariş detayı ve malzeme ihtiyacı |
 |---|---|
-| ![Siparişler](docs/screenshots/siparisler.png) | ![Sipariş detayı](docs/screenshots/siparis-detay.png) |
+| ![Siparişler](docs/siparisler.png) | ![Sipariş detayı](docs/siparis-detay.png) |
 | **Yeni sipariş (doğrulama)** | **Toplam malzeme ihtiyacı** |
-| ![Yeni sipariş](docs/screenshots/yeni-siparis.png) | ![Toplam ihtiyaç](docs/screenshots/toplam-ihtiyac.png) |
+| ![Yeni sipariş](docs/yeni-siparis.png) | ![Toplam ihtiyaç](docs/toplam-ihtiyac.png) |
 
 ## Özellikler
 
